@@ -1,0 +1,68 @@
+---
+title: "Clustring"
+author: "Hossein Khandani"
+date: '2020-04-02'
+slug: Persain-Rmarkdown
+tags: R Markdown
+categories: R
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) 
+```
+
+<h1 dir="rtl"> <font face="B Titr">  خوشه بندی <font/> </h1>
+
+<p dir="rtl" align="justify">
+<font face="B Nazanin" size="5" color="black">
+خوشه بندی (Clustering)
+«تحلیل خوشه بندی» (Cluster Analysis) یا بطور خلاصه خوشه بندی، فرآیندی است که به کمک آن می توان مجموعه ای از اشیاء را به گروه های مجزا افراز کرد. هر افراز یک خوشه نامیده می شود. اعضاء هر خوشه با توجه به ویژگی هایی که دارند به یکدیگر بسیار شبیه هستند و در عوض میزان شباهت بین خوشه ها کمترین مقدار است. در چنین حالتی هدف از خوشه بندی، نسبت دادن برچسب هایی به اشیاء است که نشان دهنده عضویت هر شیء به خوشه است.
+<font/>
+<p/>
+
+
+
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
+
+DT::datatable(iris)
+```
+
+## K-means
+<p dir="rtl" align="justify"> 
+خوشه بندی یا Clustering یکی از شاخه های یادگیری بدون نظارت (Unsupervised) می باشد و فرآیند خود کاری است که در طی آن، نمونه ها به دسته هایی که اعضای آن مشابه یکدیگر می باشند تقسیم می شوند که به این دسته ها خوشه (Cluster) گفته می شود. بنابراین خوشه مجموعه ای از اشیاء می باشد که در آن اشیاء با یکدیگر مشابه بوده و با اشیاء موجود در خوشه های دیگر غیر مشابه می باشند. برای مشابه بودن می توان معیارهای مختلفی را در نظر گرفت مثلا می توان معیار فاصله را برای خوشه بندی مورد استفاده قرار داد و اشیائی را که به یکدیگر نزدیکتر هستند را بعنوان یک خوشه در نظر گرفت که به این نوع خوشه بندی، خوشه بندی مبتنی بر فاصله نیز گفته می شود. بعنوان مثال در شکل ۱ نمونه های ورودی در سمت چپ به چهار خوشه مشابه شکل سمت راست تقسیم می شوند. در این مثال هر یک از نمونه های ورودی به یکی از خوشه ها تعلق دارد و نمونه ای وجود ندارد که متعلق به بیش از یک خوشه باشد.<p/>
+
+```{r message=FALSE, warning=FALSE}
+cl1<-kmeans(iris[,1:4],3)
+
+
+```
+
+
+
+```{r message=FALSE, warning=FALSE}
+# ggplor2
+
+library(ggplot2)
+da1<-iris
+
+library(htmlwidgets)
+library(plotly)
+
+ggplotly(
+  ggplot(da1, aes(Sepal.Length,Sepal.Width,col=Species))+
+  geom_point()
+)
+```
+<p dir="rtl" align="justify"> 
+نتایج خوشه بندی را مذکور را در قالب مصورسازی 3 بعدی نمایش داده شده است.
+<p/>
+
+```{r message=FALSE, warning=FALSE}
+library(plotly)
+plot_ly(iris,x=~iris$Sepal.Length,y=~iris$Sepal.Width,z=~iris$Petal.Width,color = ~iris$Species)%>%
+        layout(title = 'Showing up 3D SCATTER PLOT',
+               scene = list(
+                 xaxis = list(title = "Var x"), 
+                 yaxis = list(title = "Var y")))
+
+```
